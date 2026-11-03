@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+@theme {
+  --color-sunflower: #B6A248;
+  --color-toast: #C2B27F;
+  --color-macadamia: #DFD8C0;
+  --color-amber-glass: #602C14;
+  --color-sunburn: #AE7E5D;
+  --color-fresh-linen: #B1BDDF;
+  --color-olive-dark: #3A4028;
+  --color-olive-light: #6B7554;
+  --color-bg-light: #F7F5F0;
+  --color-sage-banner: #8F9E8D;
+  --color-sage-light: #E8ECE6;
+  --color-sage-muted: #798877;
+  --color-sage-deep: #475245;
+
+  --font-serif: 'Cormorant Garamond', serif;
+  --font-sans: 'Jost', sans-serif;
+}
+
+body {
+  background-color: var(--color-bg-light);
+  color: var(--color-olive-dark);
+  font-family: var(--font-sans);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+}
