@@ -12,16 +12,19 @@ import {
   ShieldCheck, Clock, Sparkles
 } from 'lucide-react';
 
-// Locally Hosted High-Resolution Photography Assets
-const HERO_IMAGE = "/src/assets/images/hero_mooigedacht_valley_1793660214414.jpg";
-const HIKE_IMAGE = "/src/assets/images/feature_hike_camino_1793660233422.jpg";
-const LOCAL_VIEWS_IMAGE = "/src/assets/images/feature_local_views_1793660234145.jpg";
-const FARM_SHOP_IMAGE = "/src/assets/images/feature_farm_shop_1793660235172.jpg";
-const MOUNTAIN_STREAM_IMAGE = "/src/assets/images/texture_mountain_stream_1793660234116.jpg";
-const COTTAGE_BEDROOM = "/src/assets/images/cottage_bedroom_cozy_1793660910756.jpg";
-const COTTAGE_LIVING = "/src/assets/images/cottage_living_fireplace_1793660912019.jpg";
-const COTTAGE_DECK_POOL = "/src/assets/images/cottage_deck_hot_tub_1793660942562.jpg";
-const COTTAGE_KITCHEN = "/src/assets/images/cottage_kitchen_table_1793660912798.jpg";
+// Locally Hosted High-Resolution Photography Assets (Bundled by Vite for Vercel & Production)
+import HERO_IMAGE from '../assets/images/hero_mooigedacht_valley_1793660214414.jpg';
+import HIKE_IMAGE from '../assets/images/feature_hike_camino_1793660233422.jpg';
+import LOCAL_VIEWS_IMAGE from '../assets/images/feature_local_views_1793660234145.jpg';
+import FARM_SHOP_IMAGE from '../assets/images/feature_farm_shop_1793660235172.jpg';
+import MOUNTAIN_STREAM_IMAGE from '../assets/images/texture_mountain_stream_1793660234116.jpg';
+import COTTAGE_BEDROOM from '../assets/images/cottage_bedroom_cozy_1793660910756.jpg';
+import COTTAGE_LIVING from '../assets/images/cottage_living_fireplace_1793660912019.jpg';
+import COTTAGE_DECK_POOL from '../assets/images/cottage_deck_hot_tub_1793660942562.jpg';
+import COTTAGE_KITCHEN from '../assets/images/cottage_kitchen_table_1793660912798.jpg';
+
+// Public Directory Fallbacks (Guaranteed available statically on Vercel)
+const FALLBACK_HERO = '/images/hero_mooigedacht_valley_1793660214414.jpg';
 
 // Verified Gallery Images for Heritage Cottage
 const galleryImages = [
@@ -36,13 +39,14 @@ const galleryImages = [
   FARM_SHOP_IMAGE
 ];
 
-// Farm Shop Pantry Items (LookBook Page 5)
+// Farm Shop Pantry Items (LookBook Page 5: with Delicious Food & Produce Imagery)
 interface PantryItem {
   id: string;
   name: string;
   category: 'meal' | 'produce';
   price: number;
   description: string;
+  image: string;
 }
 
 const PANTRY_ITEMS: PantryItem[] = [
@@ -51,42 +55,48 @@ const PANTRY_ITEMS: PantryItem[] = [
     name: 'Karoo Slow-Braised Lamb Shank',
     category: 'meal',
     price: 185,
-    description: 'Slow-braised with valley root vegetables and rosemary red-wine jus. Oven-ready in cottage.'
+    description: 'Slow-braised with valley root vegetables and rosemary red-wine jus. Oven-ready in cottage.',
+    image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=700&q=80'
   },
   {
     id: 'bobotie',
     name: 'Cape Malay Bobotie & Geelrys',
     category: 'meal',
     price: 145,
-    description: 'Heritage spiced beef with bay leaf egg custard, golden raisins, and fragrant turmeric rice.'
+    description: 'Heritage spiced beef with bay leaf egg custard, golden raisins, and fragrant turmeric rice.',
+    image: 'https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=700&q=80'
   },
   {
     id: 'lentil-pot',
     name: 'Roasted Squash & Green Lentil Bake',
     category: 'meal',
     price: 120,
-    description: 'Hearty vegetarian bake made with seasonal produce picked fresh from the farm garden.'
+    description: 'Hearty vegetarian bake made with seasonal produce picked fresh from the farm garden.',
+    image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=700&q=80'
   },
   {
     id: 'honey',
     name: 'Raw Mountain Fynbos Comb Honey',
     category: 'produce',
     price: 95,
-    description: '500g glass jar of raw, cold-extracted honey from our sheltered mountain apiaries.'
+    description: '500g glass jar of raw, cold-extracted honey from our sheltered mountain apiaries.',
+    image: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=700&q=80'
   },
   {
     id: 'olive-oil',
     name: 'First Cold-Pressed Extra Virgin Olive Oil',
     category: 'produce',
     price: 160,
-    description: '750ml estate olive oil with peppery finish from our ancient valley olive grove.'
+    description: '750ml estate olive oil with peppery finish from our ancient valley olive grove.',
+    image: 'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=700&q=80'
   },
   {
     id: 'sourdough',
     name: 'Artisan Hearth Sourdough Loaf',
     category: 'produce',
     price: 55,
-    description: 'Slow-fermented wild yeast country loaf, baked and delivered warm to your cottage doorstep.'
+    description: 'Slow-fermented wild yeast country loaf, baked and delivered warm to your cottage doorstep.',
+    image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=700&q=80'
   }
 ];
 
@@ -208,7 +218,7 @@ export default function Home() {
     <div className="min-h-screen bg-[#F7F5F0] text-olive-dark font-sans selection:bg-[#3A4028] selection:text-[#DFD8C0] overflow-x-hidden antialiased">
       
       {/* 1. HERO SECTION: High-Contrast, Architectural, Cinematic with Ambient Motion */}
-      <section id="hero" className="relative min-h-[92vh] sm:min-h-screen w-full overflow-hidden flex flex-col justify-between">
+      <section id="hero" className="relative min-h-screen w-full overflow-hidden flex flex-col justify-between">
         <div className="absolute inset-0 z-0 overflow-hidden">
           <motion.img 
             initial={{ scale: 1.08 }}
@@ -224,26 +234,26 @@ export default function Home() {
         </div>
         
         {/* Top spacer for navbar */}
-        <div className="relative z-10 pt-16 sm:pt-20" />
+        <div className="relative z-10 pt-16 sm:pt-24" />
 
-        {/* Central Hero Headline Block */}
-        <div className="relative z-10 w-full max-w-6xl mx-auto px-4 xs:px-6 sm:px-10 lg:px-12 text-center text-white py-10 xs:py-14 sm:py-20">
+        {/* Central Hero Headline Block: Optical Center on Desktop */}
+        <div className="relative z-10 w-full max-w-6xl mx-auto px-6 sm:px-10 lg:px-12 text-center text-white my-auto py-12 md:py-20 lg:py-24">
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="inline-flex items-center gap-2 sm:gap-3 text-[11px] xs:text-xs sm:text-sm uppercase tracking-[0.25em] sm:tracking-[0.35em] text-[#FAF5EB] font-semibold mb-4 sm:mb-6 drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]"
+            className="inline-flex items-center gap-2 sm:gap-3 text-xs sm:text-sm uppercase tracking-[0.25em] sm:tracking-[0.35em] text-[#FAF5EB] font-semibold mb-4 sm:mb-6 drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]"
           >
-            <span className="w-4 sm:w-8 h-px bg-[#FAF5EB]/60" />
-            <span>Kareedouw · Eastern Cape</span>
-            <span className="w-4 sm:w-8 h-px bg-[#FAF5EB]/60" />
+            <span className="w-5 sm:w-10 h-px bg-[#FAF5EB]/60" />
+            <span>Kareedouw · Eastern Cape · South Africa</span>
+            <span className="w-5 sm:w-10 h-px bg-[#FAF5EB]/60" />
           </motion.div>
 
           <motion.h1 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="font-serif text-4xl xs:text-5xl sm:text-7xl md:text-8xl lg:text-9xl mb-4 sm:mb-6 tracking-[0.12em] xs:tracking-[0.14em] sm:tracking-[0.16em] uppercase text-white font-medium drop-shadow-[0_4px_28px_rgba(0,0,0,0.85)] select-none"
+            className="font-serif text-4xl sm:text-7xl md:text-8xl lg:text-9xl mb-4 sm:mb-6 tracking-[0.14em] sm:tracking-[0.16em] uppercase text-white font-medium drop-shadow-[0_4px_30px_rgba(0,0,0,0.9)] select-none"
           >
             Mooigedacht
           </motion.h1>
@@ -252,48 +262,47 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.35 }}
-            className="font-serif italic text-base xs:text-lg sm:text-2xl md:text-3xl font-medium text-white max-w-2xl sm:max-w-3xl mx-auto mb-8 sm:mb-12 leading-relaxed drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)] px-2"
+            className="font-serif italic text-base sm:text-2xl md:text-3xl lg:text-4xl font-medium text-white max-w-3xl mx-auto mb-8 sm:mb-12 leading-relaxed drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)] px-4"
           >
             "Here at Mooigedacht the time is slow, the air is clean, and the water is cool."
           </motion.p>
           
+          {/* Action Buttons: Side-by-Side on Desktop with Balanced Proportions */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.55 }}
-            className="flex flex-col xs:flex-row gap-3 sm:gap-4 items-center justify-center w-full max-w-xs xs:max-w-md mx-auto"
+            className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-center justify-center w-full max-w-lg mx-auto"
           >
             <motion.button 
-              whileHover={{ y: -2 }}
+              whileHover={{ y: -3 }}
               whileTap={{ scale: 0.96 }}
               onClick={() => scrollToSection('book-your-stay')}
-              className="w-full xs:w-auto bg-[#242A19] hover:bg-[#343C24] text-white px-7 sm:px-8 py-3.5 sm:py-4 rounded-full text-xs uppercase tracking-[0.2em] font-bold transition-all shadow-xl cursor-pointer border border-white/20 active:bg-black/80"
+              className="w-full sm:w-auto min-w-[210px] bg-[#242A19] hover:bg-[#343C24] text-white px-8 md:px-10 py-4 rounded-full text-xs uppercase tracking-[0.22em] font-bold transition-all shadow-xl cursor-pointer border border-white/20 active:scale-95 text-center"
               id="hero-btn-book"
             >
               Book Your Stay
             </motion.button>
             <motion.button 
-              whileHover={{ y: -2 }}
+              whileHover={{ y: -3 }}
               whileTap={{ scale: 0.96 }}
               onClick={() => scrollToSection('camino')}
-              className="w-full xs:w-auto bg-black/40 hover:bg-black/60 backdrop-blur-md border border-white/60 text-white px-7 sm:px-8 py-3.5 sm:py-4 rounded-full text-xs uppercase tracking-[0.2em] font-bold transition-all text-center cursor-pointer shadow-lg active:bg-black/80"
+              className="w-full sm:w-auto min-w-[210px] bg-black/40 hover:bg-black/60 backdrop-blur-md border border-white/60 text-white px-8 md:px-10 py-4 rounded-full text-xs uppercase tracking-[0.22em] font-bold transition-all text-center cursor-pointer shadow-lg active:scale-95"
             >
               Discover Valley
             </motion.button>
           </motion.div>
         </div>
 
-        {/* Responsive Bottom Metabar (Mobile Compact Strip & Desktop Spread) */}
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-12 py-4 sm:py-6 border-t border-white/20 text-[#FAF5EB] font-medium tracking-wider text-[11px] sm:text-xs drop-shadow-sm">
-          <div className="flex flex-col xs:flex-row items-center justify-between gap-2 sm:gap-6 text-center xs:text-left">
-            <div className="flex items-center justify-center gap-3 sm:gap-6 flex-wrap">
-              <span>OFF-THE-GRID RETREAT</span>
-              <span>·</span>
-              <span>SOLAR &amp; SPRING WATER</span>
-            </div>
-            <div className="flex items-center justify-center gap-2">
-              <span>ESTABLISHED 4 GENERATIONS</span>
-            </div>
+        {/* Responsive Bottom Metabar (Full Spread on Desktop, Compact on Mobile) */}
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-12 py-5 sm:py-6 border-t border-white/20 text-[#FAF5EB] font-medium tracking-wider text-xs drop-shadow-sm flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+          <div className="flex items-center justify-center gap-3 sm:gap-6 flex-wrap">
+            <span>OFF-THE-GRID MOUNTAIN RETREAT</span>
+            <span>·</span>
+            <span>SOLAR POWER &amp; BOREHOLE SPRING WATER</span>
+          </div>
+          <div className="flex items-center justify-center gap-2">
+            <span>ESTABLISHED 4 GENERATIONS</span>
           </div>
         </div>
       </section>
@@ -301,29 +310,29 @@ export default function Home() {
       {/* 2. WELCOME & ETHOS SECTION: Refined Editorial Whitespace with In-View Animations */}
       <section 
         id="welcome"
-        className="py-16 sm:py-24 md:py-32 px-5 sm:px-10 lg:px-16 max-w-6xl mx-auto scroll-mt-20"
+        className="py-20 sm:py-28 md:py-36 px-6 sm:px-12 lg:px-16 max-w-6xl mx-auto scroll-mt-24"
       >
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.8 }}
-          className="max-w-3xl mx-auto text-center mb-12 sm:mb-20"
+          className="max-w-3xl mx-auto text-center mb-14 sm:mb-20"
         >
-          <span className="text-xs uppercase tracking-[0.3em] text-[#3E4929] font-bold block mb-2 sm:mb-3">
+          <span className="text-xs uppercase tracking-[0.3em] text-[#3E4929] font-bold block mb-3">
             XXH Studio Lookbook
           </span>
-          <h2 className="font-serif text-2xl xs:text-3xl sm:text-5xl md:text-6xl text-[#141A0E] mb-5 sm:mb-7 leading-tight font-normal">
+          <h2 className="font-serif text-3xl sm:text-5xl md:text-6xl text-[#141A0E] mb-6 sm:mb-8 leading-tight font-normal">
             Welcome to Mooigedacht Collective
           </h2>
-          <p className="text-sm xs:text-base sm:text-lg md:text-xl leading-relaxed text-[#181E10] font-normal mb-6 sm:mb-8">
+          <p className="text-base sm:text-lg md:text-xl leading-relaxed text-[#181E10] font-normal mb-8">
             Surrounded by the pristine beauty of the valley, our working farm offers unique accommodations with laid-back luxury, gracious hospitality, and a deep connection to nature. Since our family first settled here, we have created memories for generations of travelers. Create one for yourself with an unforgettable stay at Mooigedacht.
           </p>
-          <div className="w-16 sm:w-20 h-0.5 bg-[#282D1C]/30 mx-auto" />
+          <div className="w-20 h-0.5 bg-[#282D1C]/30 mx-auto" />
         </motion.div>
 
         {/* 3 Storytelling Pillars: Modern Staggered In-View reveals */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8 items-stretch">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-stretch">
           {[
             {
               num: "01",
@@ -357,7 +366,7 @@ export default function Home() {
               <div>
                 <span className="font-serif text-3xl text-[#525E37] font-bold block mb-3 sm:mb-4">{pillar.num}</span>
                 <h3 className="font-serif text-xl sm:text-2xl text-[#141A0E] mb-2 sm:mb-3 font-bold">{pillar.title}</h3>
-                <p className="text-xs xs:text-sm sm:text-[15px] text-[#1F2614] font-normal leading-relaxed">
+                <p className="text-xs sm:text-[15px] text-[#1F2614] font-normal leading-relaxed">
                   {pillar.desc}
                 </p>
               </div>
@@ -369,10 +378,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 3. BOOK YOUR STAY: Rich Eucalyptus Sage Banner (High Contrast & Mature Cards) */}
+      {/* 3. BOOK YOUR STAY: Rich Eucalyptus Sage Banner (Desktop Optimized & Guaranteed Header Clearance) */}
       <section 
         id="book-your-stay"
-        className="scroll-mt-16 py-16 sm:py-24 md:py-32 px-4 xs:px-6 sm:px-12 lg:px-16 bg-[#586B56] text-white relative overflow-hidden"
+        className="scroll-mt-28 pt-24 sm:pt-32 md:pt-36 pb-20 sm:pb-28 md:pb-36 px-6 sm:px-12 lg:px-16 bg-[#586B56] text-white relative overflow-hidden"
       >
         <div className="absolute inset-0 opacity-10 mix-blend-overlay pointer-events-none">
           <div className="w-full h-full bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:28px_28px]" />
@@ -384,21 +393,21 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.7 }}
-            className="text-center max-w-3xl mx-auto mb-12 sm:mb-18"
+            className="text-center max-w-3xl mx-auto mb-14 sm:mb-20"
           >
-            <span className="text-xs uppercase tracking-[0.3em] text-[#FAF5EB] font-bold block mb-2 sm:mb-3 drop-shadow-xs">
+            <span className="text-xs uppercase tracking-[0.3em] text-[#FAF5EB] font-bold block mb-3 drop-shadow-xs">
               Reservations &amp; Channels
             </span>
-            <h2 className="font-serif text-3xl xs:text-4xl sm:text-6xl text-white mb-2 sm:mb-3 tracking-wide font-normal drop-shadow-sm">
+            <h2 className="font-serif text-4xl sm:text-6xl text-white mb-3 tracking-wide font-normal drop-shadow-sm">
               Book Your Stay
             </h2>
-            <p className="font-serif italic text-lg sm:text-2xl text-[#FAF5EB] font-medium drop-shadow-sm">
+            <p className="font-serif italic text-xl sm:text-2xl text-[#FAF5EB] font-medium drop-shadow-sm">
               Kick your boots off and stay awhile
             </p>
           </motion.div>
 
           {/* Three Modern, Mature Editorial Booking Cards with In-View Stagger */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8 items-stretch">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
             
             {/* CARD 1: AIRBNB */}
             <motion.div 
@@ -417,27 +426,27 @@ export default function Home() {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                   onError={handleImageFallback}
                 />
-                <div className="absolute top-3.5 left-3.5 bg-white/95 backdrop-blur-md px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-bold text-[#141A0E] flex items-center gap-1.5 shadow-md">
+                <div className="absolute top-3.5 left-3.5 bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs font-bold text-[#141A0E] flex items-center gap-1.5 shadow-md">
                   <Star className="w-3.5 h-3.5 fill-[#E11565] text-[#E11565]" />
                   <span>4.94 Superhost</span>
                 </div>
               </div>
-              <div className="p-5 sm:p-7 md:p-8 flex-1 flex flex-col justify-between">
+              <div className="p-6 sm:p-7 md:p-8 flex-1 flex flex-col justify-between">
                 <div>
-                  <div className="flex items-baseline justify-between mb-1.5 sm:mb-2">
-                    <h3 className="font-serif text-xl sm:text-2xl text-[#141A0E] font-bold">Airbnb</h3>
+                  <div className="flex items-baseline justify-between mb-2">
+                    <h3 className="font-serif text-2xl text-[#141A0E] font-bold">Airbnb</h3>
                     <span className="text-xs text-[#2D361F] font-bold">51 Reviews</span>
                   </div>
-                  <p className="text-xs sm:text-sm text-[#1F2614] font-normal leading-relaxed mb-5 sm:mb-6">
+                  <p className="text-sm text-[#1F2614] font-normal leading-relaxed mb-6">
                     Book through Airbnb with complete international guest protections, verified Superhost service, and multiple currency options.
                   </p>
                 </div>
-                <div className="pt-3.5 sm:pt-4 border-t border-[#282D1C]/15">
+                <div className="pt-4 border-t border-[#282D1C]/15">
                   <a
                     href="https://www.airbnb.co.uk/rooms/1048991010574715381"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-between w-full py-3 sm:py-3.5 px-4 sm:px-5 rounded-xl bg-[#242A19] hover:bg-[#384227] text-white text-xs font-bold uppercase tracking-[0.16em] transition-all shadow-md active:scale-95"
+                    className="flex items-center justify-between w-full py-3.5 px-5 rounded-xl bg-[#242A19] hover:bg-[#384227] text-white text-xs font-bold uppercase tracking-[0.16em] transition-all shadow-md active:scale-95"
                   >
                     <span>Book on Airbnb</span>
                     <ArrowRight className="w-4 h-4" />
@@ -463,27 +472,27 @@ export default function Home() {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                   onError={handleImageFallback}
                 />
-                <div className="absolute top-3.5 left-3.5 bg-[#8E792C] text-white px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-bold shadow-md">
+                <div className="absolute top-3.5 left-3.5 bg-[#8E792C] text-white px-3.5 py-1.5 rounded-full text-xs font-bold shadow-md">
                   <span>SA Domestic Favourite</span>
                 </div>
               </div>
-              <div className="p-5 sm:p-7 md:p-8 flex-1 flex flex-col justify-between">
+              <div className="p-6 sm:p-7 md:p-8 flex-1 flex flex-col justify-between">
                 <div>
-                  <div className="flex items-baseline justify-between mb-1.5 sm:mb-2">
-                    <h3 className="font-serif text-xl sm:text-2xl text-[#141A0E] font-bold">Lekkeslaap</h3>
+                  <div className="flex items-baseline justify-between mb-2">
+                    <h3 className="font-serif text-2xl text-[#141A0E] font-bold">Lekkeslaap</h3>
                     <span className="text-xs text-[#384326] font-bold">ZAR Rates</span>
                   </div>
-                  <p className="text-xs sm:text-sm text-[#1F2614] font-normal leading-relaxed mb-5 sm:mb-6">
+                  <p className="text-sm text-[#1F2614] font-normal leading-relaxed mb-6">
                     South Africa's beloved domestic booking portal. Pay seamlessly via EFT or local debit/credit card with straightforward local terms.
                   </p>
                 </div>
-                <div className="pt-3.5 sm:pt-4 border-t border-[#282D1C]/15">
+                <div className="pt-4 border-t border-[#282D1C]/15">
                   <button
                     onClick={() => {
                       setBookingChannel('lekkeslaap');
                       setIsBookingModalOpen(true);
                     }}
-                    className="flex items-center justify-between w-full py-3 sm:py-3.5 px-4 sm:px-5 rounded-xl bg-[#4A5B48] hover:bg-[#394937] text-white text-xs font-bold uppercase tracking-[0.16em] transition-all shadow-md cursor-pointer active:scale-95"
+                    className="flex items-center justify-between w-full py-3.5 px-5 rounded-xl bg-[#4A5B48] hover:bg-[#394937] text-white text-xs font-bold uppercase tracking-[0.16em] transition-all shadow-md cursor-pointer active:scale-95"
                   >
                     <span>Book on Lekkeslaap</span>
                     <ArrowRight className="w-4 h-4" />
@@ -502,7 +511,7 @@ export default function Home() {
               whileTap={{ scale: 0.98 }}
               className="bg-white text-[#141A0E] rounded-2xl overflow-hidden shadow-[0_10px_35px_rgba(0,0,0,0.08)] border-2 border-[#242A19] flex flex-col justify-between group transition-all duration-300 relative"
             >
-              <div className="absolute top-3.5 right-3.5 z-10 bg-[#242A19] text-[#FAF5EB] px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-[11px] sm:text-xs uppercase tracking-wider font-bold shadow-md">
+              <div className="absolute top-3.5 right-3.5 z-10 bg-[#242A19] text-[#FAF5EB] px-3.5 py-1.5 rounded-full text-xs uppercase tracking-wider font-bold shadow-md">
                 Best Rate Guarantee
               </div>
               <div className="relative aspect-[16/11] overflow-hidden bg-macadamia/20">
@@ -512,27 +521,27 @@ export default function Home() {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                   onError={handleImageFallback}
                 />
-                <div className="absolute bottom-3.5 left-3.5 bg-white/95 backdrop-blur-md px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-bold text-[#141A0E] flex items-center gap-1 shadow-md">
+                <div className="absolute bottom-3.5 left-3.5 bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs font-bold text-[#141A0E] flex items-center gap-1 shadow-md">
                   <span>R1 050 / night</span>
                 </div>
               </div>
-              <div className="p-5 sm:p-7 md:p-8 flex-1 flex flex-col justify-between">
+              <div className="p-6 sm:p-7 md:p-8 flex-1 flex flex-col justify-between">
                 <div>
-                  <div className="flex items-baseline justify-between mb-1.5 sm:mb-2">
-                    <h3 className="font-serif text-xl sm:text-2xl text-[#141A0E] font-bold">Book Directly</h3>
+                  <div className="flex items-baseline justify-between mb-2">
+                    <h3 className="font-serif text-2xl text-[#141A0E] font-bold">Book Directly</h3>
                     <span className="text-xs text-[#242A19] font-bold">Zero Commission</span>
                   </div>
-                  <p className="text-xs sm:text-sm text-[#1F2614] font-normal leading-relaxed mb-5 sm:mb-6">
+                  <p className="text-sm text-[#1F2614] font-normal leading-relaxed mb-6">
                     Connect directly with host Carine. Flexible dates, bespoke farm pantry hampers, and personalized trail advice.
                   </p>
                 </div>
-                <div className="pt-3.5 sm:pt-4 border-t border-[#282D1C]/15">
+                <div className="pt-4 border-t border-[#282D1C]/15">
                   <button
                     onClick={() => {
                       setBookingChannel('direct');
                       setIsBookingModalOpen(true);
                     }}
-                    className="flex items-center justify-between w-full py-3 sm:py-3.5 px-4 sm:px-5 rounded-xl bg-[#242A19] hover:bg-[#384227] text-white text-xs font-bold uppercase tracking-[0.16em] transition-all shadow-md cursor-pointer active:scale-95"
+                    className="flex items-center justify-between w-full py-3.5 px-5 rounded-xl bg-[#242A19] hover:bg-[#384227] text-white text-xs font-bold uppercase tracking-[0.16em] transition-all shadow-md cursor-pointer active:scale-95"
                   >
                     <span>Inquire Directly</span>
                     <ArrowRight className="w-4 h-4" />
@@ -543,7 +552,7 @@ export default function Home() {
 
           </div>
 
-          <div className="mt-10 sm:mt-12 text-center text-[11px] sm:text-sm text-white font-medium flex items-center justify-center gap-3 sm:gap-6 flex-wrap drop-shadow-xs">
+          <div className="mt-12 text-center text-xs sm:text-sm text-white font-medium flex items-center justify-center gap-4 sm:gap-6 flex-wrap drop-shadow-xs">
             <span>· Instant check-in confirmation</span>
             <span>· High-speed uncapped Wi-Fi</span>
             <span>· Pure mountain spring water</span>
@@ -987,7 +996,7 @@ export default function Home() {
         </motion.div>
 
         {/* Shop Grid with High Contrast & In-View Motion */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {PANTRY_ITEMS.map((item, idx) => (
             <motion.div 
               key={item.id} 
@@ -995,51 +1004,69 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-30px" }}
               transition={{ duration: 0.5, delay: idx * 0.08 }}
-              whileHover={{ y: -4 }}
-              className="bg-white rounded-2xl p-5 sm:p-7 border border-[#282D1C]/15 shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex flex-col justify-between hover:border-[#282D1C]/40 hover:shadow-md transition-all duration-300"
+              whileHover={{ y: -5 }}
+              className="group bg-white rounded-2xl overflow-hidden border border-[#282D1C]/15 shadow-[0_4px_20px_rgba(0,0,0,0.04)] flex flex-col justify-between hover:border-[#282D1C]/40 hover:shadow-xl transition-all duration-300"
             >
               <div>
-                <div className="flex items-start justify-between gap-2 mb-2 sm:mb-3">
-                  <span className="text-[10px] sm:text-xs uppercase tracking-[0.18em] text-[#8E792C] font-bold">
+                {/* Product Image Header with Tags */}
+                <div className="relative aspect-[16/10] overflow-hidden bg-[#FAF5EB]">
+                  <img 
+                    src={item.image} 
+                    alt={item.name} 
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    onError={(e) => { (e.target as HTMLImageElement).src = FARM_SHOP_IMAGE; }}
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60 pointer-events-none" />
+                  <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-md px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[#384326] shadow-sm">
                     {item.category === 'meal' ? 'Ready-to-Heat Potjie' : 'Estate Harvest'}
-                  </span>
-                  <span className="font-serif text-xl sm:text-2xl font-bold text-[#141A0E]">
+                  </div>
+                  <div className="absolute top-3 right-3 bg-[#242A19] text-white px-3 py-1 rounded-full text-xs font-bold shadow-sm">
                     R{item.price}
-                  </span>
+                  </div>
                 </div>
-                <h4 className="font-serif text-xl sm:text-2xl text-[#141A0E] font-bold mb-1.5 sm:mb-2">{item.name}</h4>
-                <p className="text-xs sm:text-sm text-[#1F2614] font-normal leading-relaxed mb-5 sm:mb-6">{item.description}</p>
+
+                <div className="p-5 sm:p-6 pb-2 sm:pb-3">
+                  <h4 className="font-serif text-xl sm:text-2xl text-[#141A0E] font-bold mb-2 group-hover:text-[#3E4929] transition-colors">
+                    {item.name}
+                  </h4>
+                  <p className="text-xs sm:text-sm text-[#1F2614] font-normal leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
               </div>
 
-              <div className="pt-3.5 sm:pt-4 border-t border-[#282D1C]/15 flex items-center justify-between">
-                {cart[item.id] ? (
-                  <div className="flex items-center gap-1.5 sm:gap-2">
-                    <button 
-                      onClick={() => removeFromCart(item.id)}
-                      className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg border border-[#282D1C]/30 flex items-center justify-center hover:bg-[#282D1C]/10 active:scale-90 text-[#141A0E] cursor-pointer"
-                      aria-label="Decrease quantity"
-                    >
-                      <Minus className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5]" />
-                    </button>
-                    <span className="font-bold text-xs sm:text-sm px-1.5 sm:px-2 text-[#141A0E]">{cart[item.id]}</span>
-                    <button 
+              <div className="p-5 sm:p-6 pt-0 sm:pt-0">
+                <div className="pt-4 border-t border-[#282D1C]/10 flex items-center justify-between">
+                  {cart[item.id] ? (
+                    <div className="flex items-center gap-1.5 sm:gap-2">
+                      <button 
+                        onClick={() => removeFromCart(item.id)}
+                        className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg border border-[#282D1C]/30 flex items-center justify-center hover:bg-[#282D1C]/10 active:scale-90 text-[#141A0E] cursor-pointer"
+                        aria-label="Decrease quantity"
+                      >
+                        <Minus className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5]" />
+                      </button>
+                      <span className="font-bold text-xs sm:text-sm px-1.5 sm:px-2 text-[#141A0E]">{cart[item.id]}</span>
+                      <button 
+                        onClick={() => addToCart(item.id)}
+                        className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#242A19] text-white flex items-center justify-center hover:bg-[#384227] active:scale-90 cursor-pointer"
+                        aria-label="Increase quantity"
+                      >
+                        <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5]" />
+                      </button>
+                    </div>
+                  ) : (
+                    <button
                       onClick={() => addToCart(item.id)}
-                      className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#242A19] text-white flex items-center justify-center hover:bg-[#384227] active:scale-90 cursor-pointer"
-                      aria-label="Increase quantity"
+                      className="flex items-center gap-1.5 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl border border-[#282D1C]/30 hover:border-[#141A0E] text-[#141A0E] text-[11px] sm:text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer active:scale-95 hover:bg-[#FAF5EB]"
                     >
-                      <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5]" />
+                      <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
+                      <span>Add to Basket</span>
                     </button>
-                  </div>
-                ) : (
-                  <button
-                    onClick={() => addToCart(item.id)}
-                    className="flex items-center gap-1.5 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl border border-[#282D1C]/30 hover:border-[#141A0E] text-[#141A0E] text-[11px] sm:text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer active:scale-95"
-                  >
-                    <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
-                    <span>Add to Basket</span>
-                  </button>
-                )}
-                <span className="text-[10px] sm:text-xs text-[#384326] font-semibold">Cottage Fridge Ready</span>
+                  )}
+                  <span className="text-[10px] sm:text-xs text-[#384326] font-semibold">Cottage Fridge Ready</span>
+                </div>
               </div>
             </motion.div>
           ))}
