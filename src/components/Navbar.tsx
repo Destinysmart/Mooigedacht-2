@@ -28,11 +28,11 @@ export default function Navbar({ onOpenBooking, cartCount = 0, onOpenCart }: Nav
     setIsDrawerOpen(false);
     const element = document.getElementById(id);
     if (element) {
-      const navHeight = 76;
+      const navOffset = window.innerWidth >= 768 ? 96 : 78;
       const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - navHeight;
+      const offsetPosition = elementPosition + window.pageYOffset - navOffset;
       window.scrollTo({
-        top: offsetPosition,
+        top: Math.max(0, offsetPosition),
         behavior: 'smooth'
       });
     }
